@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/materialize.min.css' />
+  </head>
+  <body>
+		{{#if user}}
+    <div id="username" class="hide">{{user.username}}</div>
+		<div class="navbar-fixed">
+      <nav style=" background: linear-gradient(to right, #2C2F3B , #2C2F3F);" class="z-depth-0">
+        <div class="nav-wrapper">
+          <a href="#" style="margin-left:85px; margin-top:15px;" class="brand-logo left hide-on-small-only">lostbytes.io</a>
+          <a href="#" class="brand-logo center hide-on-med-and-up">lostbytes.io</a>
+          <ul class="right hide-on-med-and-down">
+            <li>Welcome {{user.username}}</li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+		{{else}}
+		<div class="navbar-fixed">
+      <nav class="" style="background-color:#2C2F3B;">
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo center">lostbytes.io</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Request Access</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+		{{/if}}
+		<div>
+			{{{body}}}
+		</div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/stylesheets/materialize.min.js"></script>
+    <script type="text/javascript" src="/stylesheets/countUp.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  </body>
+</html>

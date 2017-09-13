@@ -1,0 +1,639 @@
+<div class="row">
+  <div class="col s12 m4 l3">
+    <div class="card-panel" style="height:95vh; margin-top:-10px; margin-left:-12px; background-color:#2C2F3B;">
+      <!-- <h4 class="center-align">Total</h4> -->
+      <div class="card-panel" style="padding:5px;">
+        <canvas id="lineChart"></canvas>      
+      </div>
+      <div class="card-panel center hide" style="padding:5px;">
+        <p class="mini-header">Money Saved: $<span id="total-money-saved">{{user.totalMoneySaved}}</span></p>
+      </div>
+      <div class="card-panel center" style="padding:5px;">
+        <p class="mini-header">Money Lost: $<span id="total-money-lost">{{user.totalMoneyLost}}</span></p>
+      </div>
+      <div class="card-panel" style="padding:5px;">
+        <canvas id="lineChartFood"></canvas>
+      </div>
+      <div class="card-panel center" style="padding:5px">
+        <p class="mini-header">Food Wasted: <span id="total-food-waste">{{user.totalFoodWaste}}</span>lbs.</p>
+      </div>
+      <div class="center">
+        <a href="" class="btn-large waves-effect waves-light">Full Stats</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="col s12 m4 l6" style="height:80vh; overflow-y:hidden; overflow-x:hidden;">
+    <div id="session-section" class="card-panel" style="padding-top:10px; padding-left:25px; padding-right:25px; padding-bottom:1px;">
+      <!-- <h3 class="center-align">Today's Session</h3> -->
+      <h5>Start new session:</h5>
+      <div class="row center">
+        <div class="col s12 m12 l4">
+          <a id="breakfast" href="" class="btn waves-effect waves-light" style="margin-bottom:10px;">Breakfast</a>
+        </div>
+        <div class="col s12 m12 l4">
+          <a id="lunch" href="" class="btn waves-effect waves-light" style="margin-bottom:10px;">Lunch</a>
+        </div>
+        <div class="col s12 m12 l4">
+          <a id="dinner" href="" class="btn waves-effect waves-light" style="margin-bottom:10px;">Dinner</a>
+        </div>
+      </div>
+    </div>
+    <div id="weight-section" class="card-panel hide">
+      <div class="row">
+        <div class="input-field col s12 m12 l12">
+          <input id="weight" type="text" class="validate">
+          <label for="weight">Weight</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s3 center"><a href="" id="veggies" class="btn waves-effect waves-light">Veggies</a></div>
+        <div class="col s3 center"><a href="" id="meats" class="btn waves-effect waves-light">Meats</a></div>
+        <div class="col s3 center"><a href="" id="dairy" class="btn waves-effect waves-light">Dairy</a></div>
+        <div class="col s3 center"><a href="" id="carbohydrates" class="btn waves-effect waves-light">Carbs</a></div>
+      </div>
+      <div class="row">
+        <div class="col s3 center"><a href="" id="chicken" class="btn waves-effect waves-light">Chicken</a></div>
+        <div class="col s3 center"><a href="" id="beef" class="btn waves-effect waves-light">Beef</a></div>
+        <div class="col s3 center"><a href="" id="pork" class="btn waves-effect waves-light">Pork</a></div>
+        <div class="col s3 center"><a href="" id="turkey" class="btn waves-effect waves-light">Turkey</a></div>
+      </div>
+      <div class="row">
+        <div class="col s12 center">
+          <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="right" data-delay="50" data-tooltip="Add Categories"><i class="material-icons">add</i></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12 l12 center">
+          <a id="complete-session" href="" class="btn-large waves-effect waves-light" style="width:80%;">Complete session</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m6 l6">
+        <div class="card-panel">
+          <canvas id="top-category-bar"></canvas>      
+        </div>
+      </div>
+      <div class="col s12 m6 l6">
+        <div class="card-panel">
+          <canvas id="top-session-bar"></canvas>      
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m4 l4">
+        <div class="card-panel">
+          <h2 id="highest-cost-type" class=""></h2>
+          <p id="highest-type" class="" style="margin-top:-8px;"></p>
+        </div>
+      </div>
+      <div class="col s12 m4 l4">
+        <div class="card-panel">
+          <h2>3.27<span style="font-size:0.4em;">lbs.</span></h2>
+          <p style="margin-top:-20px;">carbohyrates wasted</p>
+        </div>
+      </div>
+      <div class="col s12 m4 l4">
+        <div class="card-panel">
+          <span style="font-size:1.8em;">-4.5%</span> food waste
+        </div>
+        <div class="card-panel"><span style="font-size:1.8em;">-3.2%</span> costs</div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="col s12 m4 l3" style="overflow-y:hidden;">
+    <div id="recent-sessions" class="card-panel" style="height:89vh;">
+      <h4 class="center-align" style="margin-top:0px;">Recent Sessions</h4>
+      <div style="height:62vh; overflow:scroll;">
+        {{#each sessions}}
+          <!-- <div class="card-panel"> -->
+            <div class="session-tag z-depth-1">{{type}}</div>
+            <p class="date" style="font-size:1.3em;">{{date}}</p>
+            <!-- <p class="center-align">Total Food Waste: {{foodWaste}}lbs.</p> -->
+            <div class="row" style="margin-top:-10px;">
+              <div class="col s12 m6 l6 center">
+                <p>Food Waste: <br/><span class="red-text">{{foodWaste}}lbs.</span></p>
+              </div>
+              <div class="col s12 m6 l6 center">
+                <p>Money Lost: <br/><span class="red-text">${{moneyLost}}</span></p>
+              </div>
+              <!-- <div class="col s12 m6 l6 center">
+                <p>Money Saved: <br/><span class="green-text">${{moneySaved}}</span></p>
+              </div> -->
+            </div>
+          <!-- </div> -->
+          <hr>
+        {{/each}}
+      </div>
+      <div class="center">
+        <a href="" class="btn-large waves-effect waves-light" style="margin-top:25px; width:100%;">Edit</a>
+      </div>
+    </div>
+    <div id="recent-data" class="card-panel hide" style="height:89vh;">
+      <h4 class="center-align">Recent Data</h4>
+      <div id="recent-posts" style="height:57vh; overflow:scroll;"></div>
+      <div class="center">
+        <a id="edit-inputs" href="" class="btn-large waves-effect waves-light">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hide" id="session-id"></div>
+<div class="hide" id="session-weight"></div>
+<div class="hide" id="session-cost"></div>
+
+<div id="editInputModal" class="modal">
+  <div class="modal-content">
+    <h4>Edit Input</h4>
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="foodType" type="text" class="validate">
+        <label for="foodType">First Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="foodWeight" type="text" class="validate">
+        <label for="foodWeight">Last Name</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" id="confirm-edit" class="modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", init);
+  var cost = {carbohydrates:1, meats:2, dairy:3, veggies:1.5, chicken:2, pork:2.5, beef:3, turkey:2};
+  var days = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+  function init() {
+    // SESSION BUTTONS
+    var breakfastBtn = document.getElementById("breakfast");
+    var lunchBtn = document.getElementById("lunch");
+    var dinnerBtn = document.getElementById("dinner");
+    var completeSessionBtn = document.getElementById('complete-session');
+
+    // CATEGORY BUTTONS
+    var vegBtn = document.getElementById('veggies');
+    var meatsBtn = document.getElementById('meats');
+    var dairyBtn = document.getElementById('dairy');
+    var carbsBtn = document.getElementById('carbohydrates');
+    var chickenBtn = document.getElementById('chicken');
+    var beefBtn = document.getElementById('beef');
+    var porkBtn = document.getElementById('pork');
+    var turkeyBtn = document.getElementById('turkey');
+
+    // DATES
+    var dates = document.getElementsByClassName('date');
+
+    // EDIT INPUT
+    var editInput = document.getElementById('confirm-edit');
+    editInput.addEventListener('click', handlePostEdit);
+    $('#editInputModal').modal();
+
+    // HANDLE SESSIONS
+    breakfastBtn.addEventListener("click", handleSessionType);
+    lunchBtn.addEventListener("click", handleSessionType);
+    dinnerBtn.addEventListener("click", handleSessionType);
+    completeSessionBtn.addEventListener('click', handleCompleteSession);
+
+    // HANDLE CATEGORIES
+    vegBtn.addEventListener('click', handlePostData);
+    meatsBtn.addEventListener('click', handlePostData);
+    dairyBtn.addEventListener('click', handlePostData);
+    carbsBtn.addEventListener('click', handlePostData);
+    chickenBtn.addEventListener('click', handlePostData);
+    beefBtn.addEventListener('click', handlePostData);
+    porkBtn.addEventListener('click', handlePostData);
+    turkeyBtn.addEventListener('click', handlePostData);
+
+
+    // HANDLE DATES
+    Array.prototype.forEach.call(dates, function(date) {
+      var today = new Date(date.textContent);
+      var day = today.getDay();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      // var yyyy = today.getFullYear();
+
+      date.textContent = days[day-1]+' ('+mm+'/'+dd+')';
+    });
+
+    // COUNTUP JS
+    var countOptions = {
+      useEasing : true,
+      useGrouping : true,
+      separator : ',',
+      decimal : '.',
+    };
+
+    var moneyLost = document.getElementById('total-money-lost');
+    var foodWaste = document.getElementById('total-food-waste');
+    
+    var moneyCounter = new CountUp(moneyLost, 0, moneyLost.textContent, 2, 2.5, countOptions);
+    var foodCounter = new CountUp(foodWaste, 0, foodWaste.textContent, 2, 2.5, countOptions);
+    moneyCounter.start();
+    foodCounter.start();
+
+    // GET CHART DATA
+    var req = new XMLHttpRequest();
+    var req2 = new XMLHttpRequest();
+
+    req.open('GET', 'http://localhost:3000/api/sessions', true);
+
+    var carbTotal = 0;
+    var proteinTotal = 0;
+    var veggieTotal = 0;
+    var totalMoneyLost = [];
+    var totalFoodWaste = [];
+    var dates = [];
+
+    var breakfast = [];
+    var lunch = [];
+    var dinner = [];
+
+    req.addEventListener('load', function() {
+      if (req.status >= 200 || req.status < 400) {
+        var sessions = JSON.parse(req.responseText);
+        //for each session sort by type and get total waste for carbs, protein & veggies
+        sessions.forEach(function(sess) {
+
+          totalMoneyLost.push(sess.moneyLost);
+          totalFoodWaste.push(sess.foodWaste);
+          var dateParts = sess.data.split('T');
+          var date = dateParts[0];
+          dates.push(date);
+          // dates.push(sess.date);
+          // var today = sess.data;
+          // var day = today.getDay();
+          // var dd = today.getDate();
+          // var mm = today.getMonth()+1; //January is 0!
+          // // var yyyy = today.getFullYear();
+          // var date = days[day-1]+' ('+mm+'/'+dd+')';
+          // dates.push(date);
+
+          if (sess.type === 'breakfast') {
+            breakfast.push(sess);
+          } else if (sess.type === 'lunch') {
+            lunch.push(sess);
+          } else {
+            dinner.push(sess);
+          }
+          sess.inputs.forEach(function(input) {
+            carbTotal += input.carbohydrates;
+            proteinTotal += input.meats;
+            veggieTotal += input.veggies;
+          }); //end forEach input
+        }); //end forEach session
+
+        var breakfastWaste = 0;
+        var breakfastCost = 0;
+        var lunchWaste = 0;
+        var lunchCost = 0;
+        var dinnerWaste = 0;
+        var dinnerCost = 0;
+
+        var largestCostType = '';
+        var largestCost = 0;
+
+        breakfast.forEach(function(sess) {
+          breakfastWaste += sess.foodWaste;
+          breakfastCost += sess.moneyLost;
+        });
+        lunch.forEach(function(sess) {
+          lunchWaste += sess.foodWaste;
+          lunchCost += sess.moneyLost;
+        });
+        dinner.forEach(function(sess) {
+          dinnerWaste += sess.foodWaste;
+          dinnerCost += sess.moneyLost;
+        });
+
+        if (lunchCost > breakfastCost) {
+          if (dinnerCost > lunchCost) {
+            largestCostType = 'Dinner';
+            largestCost += dinnerCost;
+          } else {
+            largestCostType = 'Lunch';
+            largestCost += lunchCost;
+          }
+        } else {
+          if (dinnerCost > breakfastCost) {
+            largestCostType = 'Dinner';
+            largestCost += dinnerCost;
+          } else {
+            largestCostType = 'Breakfast';
+            largestCost += breakfastCost;
+          }
+        }
+
+        document.getElementById('highest-cost-type').textContent = '$'+largestCost;
+        document.getElementById('highest-type').textContent = 'wasted during '+largestCostType;
+
+        var barCtx1 = document.getElementById("top-category-bar");
+        var barCtx2 = document.getElementById("top-session-bar");
+        var lineCtx = document.getElementById("lineChart");
+        var lineCtx2 = document.getElementById("lineChartFood");
+
+        var barChart1 = new Chart(barCtx1, {
+          type: 'bar',
+          data: {
+            labels: ["Protein", "Carbs", "Veggies"],
+            datasets: [{
+              label: 'lbs. Food Waste',
+              data: [proteinTotal/16, carbTotal/16, veggieTotal/16],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }
+        });
+
+        var myChart = new Chart(barCtx2, {
+          type: 'bar',
+          data: {
+            labels: ["Breakfast", "Lunch", "Dinner"],
+            datasets: [{
+              label: 'lbs. Food Waste',
+              data: [breakfastWaste, lunchWaste, dinnerWaste],
+              backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }
+        });
+
+        var data = {
+          labels: dates,
+          datasets: [
+            {
+              label: "Cost Over Time",
+              fill: false,
+              lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: totalMoneyLost,
+              spanGaps: false,
+            }
+          ]
+        };
+
+        var data2 = {
+          labels: dates,
+          datasets: [
+            {
+              label: "Food Waste Over Time",
+              fill: false,
+              lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: totalFoodWaste,
+              spanGaps: false,
+            }
+          ]
+        };
+
+        var options = {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        };
+        var myLineChart = Chart.Line(lineCtx, {
+          data: data,
+          options: options
+        });
+
+        var myLineChart = Chart.Line(lineCtx2, {
+          data: data2,
+          options: options
+        });
+
+      } //if good status for request
+    }); //event listener for request
+
+    req.send();
+
+    // CHARTS
+    
+
+    
+
+    // lineChartData = {}; //declare an object
+    // lineChartData.labels = []; //add 'labels' element to object (X axis)
+    // lineChartData.datasets = []; //add 'datasets' array element to object
+
+    // for (line = 0; line < 4; line++) {
+    //     y = [];
+    //     lineChartData.datasets.push({}); //create a new line dataset
+    //     dataset = lineChartData.datasets[line]
+    //     dataset.fillColor = "rgba(0,0,0,0)";
+    //     dataset.strokeColor = "rgba(200,200,200,1)";
+    //     dataset.data = []; //contains the 'Y; axis data
+
+    //     for (x = 0; x < 10; x++) {
+    //         y.push(line + x); //push some data aka generate 4 distinct separate lines
+    //         if (line === 0)
+    //             lineChartData.labels.push(x); //adds x axis labels
+    //     } //for x
+
+    //     lineChartData.datasets[line].data = y;
+    //   }
+
+    // var myLineChart = Chart.Line(ctx2, lineChartData);
+
+
+  }
+
+  function handleSessionType(event) {
+    event.preventDefault();
+    var sessionType = this.id;
+    document.getElementById("session-section").classList.add("hide");  
+    document.getElementById("weight-section").classList.remove("hide");
+    document.getElementById("recent-sessions").classList.add('hide');
+    document.getElementById('recent-data').classList.remove('hide');
+
+    document.getElementById('weight').focus();
+    
+    var req = new XMLHttpRequest();
+    var webaddress = 'http://localhost:3000/api/startSession';
+    console.log(webaddress);
+    req.open('POST', webaddress, true);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    req.send("session="+sessionType);
+    req.onreadystatechange = function() {
+      if(this.readyState == this.HEADERS_RECEIVED) {
+        document.getElementById('session-id').textContent = req.getResponseHeader("id");
+      }
+    }
+  }
+
+  function handlePostData(event) {
+    event.preventDefault();
+    var wasteType = this.id;
+    var weight = Math.round(Number(document.getElementById('weight').value) *100)/100;
+    var sessionId = document.getElementById('session-id').textContent;
+    
+    if (weight !== "" && !isNaN(weight) && weight != 0) {
+      document.getElementById('weight').value = "";
+
+      //create card div for inputs
+      var cardDiv = document.createElement('div');
+      cardDiv.className = 'card-panel';
+      var wasteCost = Math.round((weight * cost[wasteType])*100)/100;
+      cardDiv.textContent = wasteType+': '+weight+"oz" + " ($" + wasteCost+ ")";
+      //create and add edit button for inputs
+      var editBtn = document.createElement('a');
+      editBtn.className = 'btn-floating btn red edit-btn';
+      var icon = document.createElement('i');
+      icon.className = 'material-icons';
+      icon.textContent = 'mode_edit';
+      editBtn.appendChild(icon);
+      editBtn.addEventListener('click', handleEditInput);
+      cardDiv.appendChild(editBtn);
+      var p = document.createElement('p');
+      p.className = 'input-id hide';
+
+      var recentPostDiv = document.getElementById('recent-posts');
+      recentPostDiv.insertBefore(cardDiv, recentPostDiv.childNodes[0]);
+
+      var totalMoneyLostDiv = document.getElementById('total-money-lost');
+      var sessionMoneyLostDiv = document.getElementById('session-cost');
+      var totalMoneyLost = Number(totalMoneyLostDiv.textContent) + wasteCost;
+      totalMoneyLostDiv.textContent = totalMoneyLost;
+      sessionMoneyLostDiv.textContent = wasteCost;
+
+
+      var totalFoodWasteDiv = document.getElementById('total-food-waste');
+      var sessionWeightDiv = document.getElementById('session-weight');
+      totalFoodWaste = Math.round(((Number(totalFoodWasteDiv.textContent) + Number(weight))/16)*100)/100;
+      totalFoodWasteDiv.textContent = totalFoodWaste;
+      sessionWeightDiv.textContent = Math.round((Number(weight)/16)*100)/100;
+
+      Materialize.toast('Successfully added!', 2000);
+
+      document.getElementById('weight').focus();
+      
+      var req = new XMLHttpRequest();
+      var webaddress = 'http://localhost:3000/api/postData/'+document.getElementById('session-id').textContent;
+      req.open('POST', webaddress, true);
+      req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      var sendString = wasteType+'='+weight+'&moneyLost='+wasteCost+'&sessionId='+sessionId;
+      console.log(sendString);
+      req.send(sendString);
+
+      //get id of input after posting it
+      req.onreadystatechange = function() {
+        if(this.readyState == this.HEADERS_RECEIVED) {
+          p.textContent = req.getResponseHeader("id");
+          cardDiv.appendChild(p);
+        }
+      }
+    } else {
+      Materialize.toast('Please enter a number!', 2000) 
+      document.getElementById('weight').focus();
+    }
+  }
+
+  function handleEditInput(event) {
+    event.preventDefault();    
+    var id = this.parentNode.childNodes[2].textContent;
+    $('#editInputModal').modal('open');
+
+  }
+
+  function handlePostEdit(event) {
+    $('#editInputModal').modal('close');
+  }
+
+  function handleCompleteSession(event) {
+    event.preventDefault();
+    var sessionId = document.getElementById('session-id').textContent;
+    var moneyLost = document.getElementById('session-cost').textContent;
+    var foodWaste = document.getElementById('session-weight').textContent;
+
+    document.getElementById('session-cost').textContent = "";
+    document.getElementById('session-weight').textContent = "";
+
+    document.getElementById('weight-section').classList.add('hide');
+    document.getElementById('session-section').classList.remove('hide');
+
+    document.getElementById('recent-data').classList.add('hide');
+    document.getElementById('recent-sessions').classList.remove('hide');
+
+    //create a new card with most recent session info and add to recent session div
+
+    var req = new XMLHttpRequest();
+    req.open('POST', 'http://localhost:3000/api/finishSession/'+sessionId, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("moneyLost="+moneyLost+"&foodWaste="+foodWaste);
+
+    location.reload();
+  }
+</script>

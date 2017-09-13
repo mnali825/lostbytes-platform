@@ -1,0 +1,64 @@
+body {
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #F9F9F9;
+  overflow:hidden;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.message {
+  color:red;
+}
+
+#toast-container {
+  top:12% !important;
+  right:32% !important;
+} 
+
+.mini-header {
+  font-size:1.5em;
+}
+
+.mini-header span {
+  
+}
+
+.btn {
+  width:100%;
+  background-color: #3EB9CE !important;
+}
+
+.btn-large {
+  background-color: #3EB9CE !important;
+  width:100%;
+}
+
+.edit-btn {
+  float:right;
+  margin-top:-12px;
+}
+
+.card-color {
+  background-color: #EC555B !important;
+}
+
+hr {
+  border-top: 1px solid #ccc;
+  margin-top:-15px;
+  margin-bottom:15px;
+}
+
+.session-tag {
+  display:inline-block;
+  float:right;
+  background-color: #A19FA8;
+  border-radius:5px;
+  padding:5px;
+  padding-left:8px;
+  padding-right:8px;
+  color:white;
+  font-size:1.2em;
+}
